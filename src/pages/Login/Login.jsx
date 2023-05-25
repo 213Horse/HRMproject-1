@@ -67,7 +67,7 @@ export const Login = () => {
     return (
         <div className="form position-relative">
             <img src={background} alt="background" className='background-gif' />
-            <main className="register position-absolute top-50 start-50 translate-middle blur">
+            <main className="login position-absolute top-50 start-50 translate-middle blur">
                 <h1 className='text-center fw-bold'>Đăng nhập</h1>
                 <div className="mb-3">
                     <label htmlFor="FormControlEmail" className="form-label text-white">Username or email address</label>
@@ -86,10 +86,7 @@ export const Login = () => {
                     </div>
                 </div>
                 <div className="mb-3">
-                    <div className="label-group d-flex justify-content-between">
-                        <label htmlFor="FormControlPassword" className="form-label text-white">Password</label>
-                        <a href="#" className='forgot-password text-white'>Quên mật khẩu</a>
-                    </div>
+                    <label htmlFor="FormControlPassword" className="form-label text-white">Password</label>
                     <input
                         type="password"
                         className={`form-control ${error.passwordError ? 'is-invalid' : ''}`}
@@ -105,7 +102,7 @@ export const Login = () => {
                 </div>
                 <button type="button" className="btn btn-primary w-100 mb-3" onClick={hanldeLogin}>Đăng nhập</button>
                 <footer className='d-flex'>
-                    <p className='no-account'>Don't have account ? </p> <NavLink to="/register" className='ms-1'>Sign up</NavLink>
+                    <NavLink to="/forgot-password" className='ms-1 text-white'>Quên mật khẩu</NavLink>
                 </footer>
             </main>
         </div>
