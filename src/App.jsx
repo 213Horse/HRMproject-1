@@ -23,7 +23,7 @@ function App() {
       errorElement: <h1>404 Page not found</h1>,
     },
     {
-      path: "/login",
+      path: "/",
       element: <Login />,
       errorElement: <h1>404 Page not found</h1>,
     },
