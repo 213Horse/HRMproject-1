@@ -1,0 +1,33 @@
+.register {
+    width: 370px;
+
+}
+
+.form {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+}
+
+.background-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.forgot-password {
+    text-decoration: none;
+    color: black;
+}
+
+.blur {
+    height: 360px;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    border-radius: 4px;
+}
+
+.no-account {
+    color: #fffbfb;
+}
