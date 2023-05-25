@@ -1,0 +1,30 @@
+.sidebar {
+    width: 300px;
+    background-color: #222d31;
+    /* transition: all 0.5s;     */
+}
+
+.smallSideBar {
+    width: 70px;
+    background-color: #222d31;
+    transition: all 0.5s;
+}
+
+.sidebar__list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar__list-item {
+    padding: 20px 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar__list-item:hover {
+    background-color: #ea6425;
+    cursor: pointer;
+}

@@ -1,0 +1,23 @@
+.header__left-side-logo {
+    width: 140px;
+}
+
+.header {
+    background-color: var(--primary-color);
+    height: 66px;
+}
+
+.header__right-side-avatar {
+    width: 50px;
+    border-radius: 9999px;
+}
+
+.header__left-side-toggle {
+    margin-left: 85px;
+    color: #ffff;
+    font-size: 25px;
+}
+
+.header__left-side-toggle:hover {
+    cursor: pointer;
+}

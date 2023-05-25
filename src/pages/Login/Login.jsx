@@ -70,7 +70,7 @@ export const Login = () => {
             <main className="login position-absolute top-50 start-50 translate-middle blur">
                 <h1 className='text-center fw-bold'>Đăng nhập</h1>
                 <div className="mb-3">
-                    <label htmlFor="FormControlEmail" className="form-label text-white">Username or email address</label>
+                    <label htmlFor="FormControlEmail" className="form-label text-white">Tên đăng nhập hoặc email</label>
                     <input
                         type="text"
                         className={`form-control ${error.usernameError ? 'is-invalid' : ''}`}
@@ -86,7 +86,7 @@ export const Login = () => {
                     </div>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="FormControlPassword" className="form-label text-white">Password</label>
+                    <label htmlFor="FormControlPassword" className="form-label text-white">Mật khẩu</label>
                     <input
                         type="password"
                         className={`form-control ${error.passwordError ? 'is-invalid' : ''}`}

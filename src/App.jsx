@@ -4,18 +4,24 @@ import {
 } from "react-router-dom";
 import { Login } from "./pages/Login/Login";
 import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword";
+import { Dashboard } from "./pages/Admin/Dashboard";
 
-// const Layout = () => {
-//   return (
-//     <div className="app-layout">
-      
-//     </div>
-//   )
-// }
+const LayoutAdmin = () => {
+  return (
+    <div className="app-layout">
+      <Dashboard/>
+    </div>
+  )
+}
 
 function App() {
 
   const router = createBrowserRouter([
+    {
+      path: "/admin",
+      element: <LayoutAdmin />,
+      errorElement: <h1>404 Page not found</h1>,
+    },
     {
       path: "/login",
       element: <Login />,
