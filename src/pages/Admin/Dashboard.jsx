@@ -142,9 +142,10 @@ const Dashboard = () => {
                             <Space
                                 style={{
                                     marginLeft: '10px',
+                                    color:'black'
                                 }}
                             >
-                                <span style={{width: 'fit-content'}}>Hồng Minh</span>
+                                <span className="fw-bold fs-6" style={{width: 'fit-content'}}>Hồng Minh</span>
                                 <DownOutlined style={{display: 'block'}}/>
                             </Space>
                         </a>
