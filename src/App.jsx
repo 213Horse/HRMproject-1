@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { Login } from "./pages/Login/Login";
 import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword";
-import { Dashboard } from "./pages/Admin/Dashboard";
+import Dashboard from "./pages/Admin/Dashboard";
 
 const LayoutAdmin = () => {
   return (
@@ -15,7 +15,6 @@ const LayoutAdmin = () => {
 }
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: "/admin",
