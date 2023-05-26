@@ -47,7 +47,7 @@ export const ForgotPassword = () => {
                 </div>
                 <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleSendCode}>Gửi mã</button>
                 <footer className='d-flex'>
-                    <NavLink to="/0" className='ms-1 text-white'>Đăng nhập</NavLink>
+                    <NavLink to="/" className='ms-1 text-white'>Đăng nhập</NavLink>
                 </footer>
             </main>
         </div>
