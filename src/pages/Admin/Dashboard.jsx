@@ -110,7 +110,7 @@ const Dashboard = () => {
                         borderRadius: '4px'
                     }}
                 >
-                    OT & Salary
+                    HRM
                 </Typography.Title>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={itemsMenu} />
             </Sider>
@@ -144,7 +144,7 @@ const Dashboard = () => {
                                     marginLeft: '10px',
                                 }}
                             >
-                                <span style={{width: 'fit-content'}}>Vũ Anh Lãm</span>
+                                <span style={{width: 'fit-content'}}>Hồng Minh</span>
                                 <DownOutlined style={{display: 'block'}}/>
                             </Space>
                         </a>
