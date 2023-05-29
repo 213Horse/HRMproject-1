@@ -5,6 +5,8 @@ import {
 import { Login } from "./pages/Login/Login";
 import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword";
 import Dashboard from "./pages/Admin/Dashboard";
+import { Profile } from "./pages/Profile/Profile";
+import { Attendance } from "./pages/Attendance/Attendance";
 
 const LayoutAdmin = () => {
   return (
@@ -13,13 +15,23 @@ const LayoutAdmin = () => {
     </div>
   )
 }
-
+ 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/admin",
       element: <LayoutAdmin />,
       errorElement: <h1>404 Page not found</h1>,
+      children: [
+        {
+          index: true,
+          element: <Profile />,
+        },
+        {
+          path: "attendance",
+          element: <Attendance />,
+        }
+      ],
     },
     {
       path: "/",

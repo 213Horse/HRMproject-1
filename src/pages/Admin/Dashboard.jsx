@@ -3,22 +3,65 @@ import {
     DashboardOutlined,
     DownOutlined,
     FileDoneOutlined,
-    FileZipOutlined,
     GlobalOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
-    MoneyCollectOutlined,
     NodeExpandOutlined,
-    ScheduleOutlined,
-    SettingOutlined,
     TeamOutlined,
 } from '@ant-design/icons';
 import { Avatar, Button, Dropdown, Layout, Menu, Space, Typography, theme } from 'antd';
 import { useState } from 'react';
-const { Header, Content, Footer, Sider } = Layout;
-import avatar from '../../assets/image/avatar-mentor-1.jpg'
+import { Link, Outlet } from 'react-router-dom';
 
-const itemsMenu = [
+import avatar from '../../assets/image/avatar-mentor-1.jpg'
+import './Dashboard.css'
+
+const itemsMenuHR = [
+    {
+        key: '1',
+        icon: <DashboardOutlined />,
+        label: <Link to='/admin'>Dashboard</Link>,
+    },
+    {
+        key: '2',
+        icon: <GlobalOutlined />,
+        label: <Link to='/admin/attendance'>Attendance</Link>,
+    },
+    {
+        key: 'sub1',
+        icon: <TeamOutlined />,
+        label: 'Ticket Management',
+        children: [
+            {
+                key: '3',
+                icon: <TeamOutlined />,
+                label: 'Leave of Absent',
+            },
+            {
+                key: '4',
+                icon: <TeamOutlined />,
+                label: 'Overtime',
+            }
+        ]
+    },
+    {
+        key: '5',
+        icon: <CalendarOutlined />,
+        label: 'Holidays',
+    },
+    {
+        key: '6',
+        icon: <FileDoneOutlined />,
+        label: 'Review Performance',
+    },
+    {
+        key: '7',
+        icon: <NodeExpandOutlined />,
+        label: 'Feedbacks',
+    }
+];
+
+const itemsMenuAccounting = [
     {
         key: '1',
         icon: <DashboardOutlined />,
@@ -27,49 +70,9 @@ const itemsMenu = [
     {
         key: '2',
         icon: <GlobalOutlined />,
-        label: 'Manage Companies',
-    },
-    {
-        key: '3',
-        icon: <TeamOutlined />,
-        label: 'Manage Employees',
-    },
-    {
-        key: '4',
-        icon: <CalendarOutlined />,
-        label: 'Manage Holidays',
-    },
-    {
-        key: '5',
-        icon: <FileDoneOutlined />,
-        label: 'Manage Contracts',
-    },
-    {
-        key: '6',
-        icon: <NodeExpandOutlined />,
-        label: 'Log OT',
-    },
-    {
-        key: '7',
-        icon: <ScheduleOutlined />,
-        label: 'Log Leave',
-    },
-    {
-        key: '8',
-        icon: <MoneyCollectOutlined />,
-        label: 'Create Salary',
-    },
-    {
-        key: '9',
-        icon: <FileZipOutlined />,
-        label: 'Manage Payslips',
-    },
-    {
-        key: '10',
-        icon: <SettingOutlined />,
-        label: 'Settings',
-    },
-];
+        label:  <Link to='/admin/payslip'>Payslip manager</Link>,
+    }
+]
 
 const items = [
     {
@@ -80,39 +83,31 @@ const items = [
     },
 ]
 
-
 const Dashboard = () => {
+    const { Header, Content, Footer, Sider } = Layout;
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    const [menu, setMenu] = useState('acc');
 
     return (
         <Layout
-            style={{
-                minHeight: '100vh',
-            }}
+            className='dashboard'
         >
-            <Sider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+            <Sider
+                collapsed={collapsed}
+                onCollapse={(value) => setCollapsed(value)}
+                style={{ width: '500px' }}
+            >
                 <div className="demo-logo-vertical" />
                 <Typography.Title
                     level={5}
-                    style={{
-                        height: '32px',
-                        margin: '16px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                        color: '#fff',
-                        fontSize: '14px',
-                        textAlign: 'center',
-                        lineHeight: '32px',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        borderRadius: '4px'
-                    }}
+                    className='dashboard__logo'
                 >
-                    HRM
+                    HR
                 </Typography.Title>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={itemsMenu} />
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={menu === 'hr' ? itemsMenuHR : itemsMenuAccounting} />
             </Sider>
             <Layout>
                 <Header
@@ -135,18 +130,18 @@ const Dashboard = () => {
                     />
                     <Dropdown
                         menu={{ items }}
-                        dropdownRender={(menu) => <div className="dropdown-logout" style={{width: 'fit-content', marginLeft: '50px'}}>{menu}</div>}
+                        dropdownRender={(menu) => <div className="dropdown-logout" style={{ width: 'fit-content', marginLeft: '50px' }}>{menu}</div>}
                     >
                         <a onClick={(e) => e.preventDefault()}>
                             <Avatar size={50} src={avatar} />
                             <Space
                                 style={{
                                     marginLeft: '10px',
-                                    color:'black'
+                                    color: 'black'
                                 }}
                             >
-                                <span className="fw-bold fs-6" style={{width: 'fit-content'}}>Hồng Minh</span>
-                                <DownOutlined style={{display: 'block'}}/>
+                                <span className="fw-bold fs-6" style={{ width: 'fit-content' }}>Hồng Minh</span>
+                                <DownOutlined style={{ display: 'block' }} />
                             </Space>
                         </a>
                     </Dropdown>
@@ -156,17 +151,7 @@ const Dashboard = () => {
                         margin: '0 16px',
                     }}
                 >
-                    <div
-                        style={{
-                            padding: 24,
-                            marginTop: 20,
-                            minHeight: 360,
-                            background: colorBgContainer,
-                            height: '100%'
-                        }}
-                    >
-                        Bill is a cat.
-                    </div>
+                    <Outlet />
                 </Content>
                 <Footer
                     style={{
