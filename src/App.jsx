@@ -7,6 +7,7 @@ import { ForgotPassword } from "./pages/ForgotPassword/ForgotPassword";
 import Dashboard from "./pages/Admin/Dashboard";
 import { Profile } from "./pages/Profile/Profile";
 import { Attendance } from "./pages/Attendance/Attendance";
+import { Payslip } from "./pages/Payslip/Payslip";
 
 const LayoutAdmin = () => {
   return (
@@ -28,8 +29,12 @@ function App() {
           element: <Profile />,
         },
         {
-          path: "attendance",
+          path: 'attendance',
           element: <Attendance />,
+        },
+        {
+          path: 'payslip',
+          element: <Payslip/>
         }
       ],
     },
