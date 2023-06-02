@@ -1,3 +1,39 @@
+.dashboard {
+    min-height: 100vh;
+}
+
+.dashboard__logo {
+    height: 32px;
+    margin: 16px;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+    text-align: center;
+    line-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 4px;
+}
+
 .main-content {
     height: calc(100vh - 66px);
+}
+
+a:hover,
+a {
+    color: #ffff
+}
+
+.dropdownIcon {
+    display: block;
+    margin-top: -6px;
+    cursor: pointer;
+}
+
+.ant-popover .ant-popover-content {
+    width: 94px;
+    text-align: center;
+}
+
+.ant-popover .ant-popover-inner {
+    padding: 9px;
 }

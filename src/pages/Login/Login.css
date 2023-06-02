@@ -20,7 +20,7 @@
 }
 
 .blur {
-    height: 360px;
+    height: 410px;
     background-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     padding: 15px 20px;

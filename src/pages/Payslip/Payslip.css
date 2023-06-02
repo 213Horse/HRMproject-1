@@ -1,0 +1,39 @@
+.payslipWrapper {
+    padding: 24px;
+    margin-top: 20px;
+    min-height: 360px;
+    height: 100%;
+}
+
+.payslipWrapper__userInfo {
+
+}
+
+.payslipWrapper__userInfo-item {
+    margin-top: 10px;
+}
+
+.userInfo-item__dataInfo {
+    margin-left: 5px;
+}
+
+
+.no-header-table .ant-table-tbody > tr > td {
+    border-top: none;
+    width: 200px;
+}
+
+.ant-table-wrapper .ant-table-tbody >tr >td:first-child {
+    width: 300px;
+    background-color: #ccc;
+}
+
+.ant-table-wrapper .ant-table-tbody >tr >td:nth-child(2) {
+    width: 100px;
+    background-color: #ccc;
+}
+
+.first-column {
+    width: 165px;
+    display: inline-block;
+}
