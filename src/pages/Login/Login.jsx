@@ -2,7 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css'
 import { useState } from 'react';
-import background from '../../assets/image/background.webp'
+import background from '../../assets/image/MideaGM_animation_v3.gif'
 import { NavLink } from 'react-router-dom';
 
 export const Login = () => {
@@ -67,8 +67,10 @@ export const Login = () => {
     return (
         <div className="form position-relative">
             <img src={background} alt="background" className='background-gif' />
+            <br></br>
             <main className="login position-absolute top-50 start-50 translate-middle blur">
-                <h1 className='text-center fw-bold'>Đăng nhập</h1>
+                <h1 className='text-center fw-bold text-white'>Đăng nhập</h1>
+                <br></br>
                 <div className="mb-3">
                     <label htmlFor="FormControlEmail" className="form-label text-white">Tên đăng nhập hoặc email</label>
                     <input

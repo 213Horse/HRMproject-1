@@ -1,0 +1,19 @@
+.born {
+  width: 400px;
+  margin-left: 23px;
+}
+  
+.bornItem {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+  
+.addressContact {
+  width: 415px;
+  margin-left: 23px;
+}
+
+.inputWidth {
+    width: 300px;
+}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import background from '../../assets/image/background.webp'
+import background from '../../assets/image/MideaGM_animation_v3.gif'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ForgotPassword.css'
 import { NavLink } from 'react-router-dom';
@@ -29,8 +29,10 @@ export const ForgotPassword = () => {
     return (
         <div className="form position-relative">
             <img src={background} alt="background" className='background-gif' />
+            <br></br>
             <main className="forgot-password position-absolute top-50 start-50 translate-middle blur">
-                <h2 className='text-center fw-bold'>Quên mật khẩu</h2>
+                <h2 className='text-center fw-bold text-white'>Quên mật khẩu</h2>
+                <br></br>
                 <div className="mb-3">
                     <label htmlFor="FormControlEmail" className="form-label text-white">Email</label>
                     <input
@@ -47,7 +49,7 @@ export const ForgotPassword = () => {
                 </div>
                 <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleSendCode}>Gửi mã</button>
                 <footer className='d-flex'>
-                    <NavLink to="/0" className='ms-1 text-white'>Đăng nhập</NavLink>
+                    <NavLink to="/" className='ms-1 text-white'>Đăng nhập</NavLink>
                 </footer>
             </main>
         </div>
