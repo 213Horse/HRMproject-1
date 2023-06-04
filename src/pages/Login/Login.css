@@ -30,3 +30,11 @@
 .no-account {
     color: #fffbfb;
 }
+
+.protect-password {
+    right: 11px;
+    top: 34px;
+    z-index: 12;
+    color: black;
+    cursor: pointer;
+}

@@ -1,6 +1,6 @@
 .dashboard {
     min-height: 100vh;
-}
+} 
 
 .dashboard__logo {
     height: 32px;
@@ -18,9 +18,9 @@
     height: calc(100vh - 66px);
 }
 
-a:hover,
+
 a {
-    color: #ffff
+    color: #ffff;
 }
 
 .dropdownIcon {
@@ -36,4 +36,12 @@ a {
 
 .ant-popover .ant-popover-inner {
     padding: 9px;
+}
+
+.main-content {
+    margin-top: 20px;
+    height: calc(100% - 64px);
+    background-color: rgb(255, 255, 255);
+    margin-left: 24px;
+    margin-right: 24px;
 }

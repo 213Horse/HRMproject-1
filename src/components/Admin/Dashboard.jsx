@@ -10,6 +10,7 @@ import {  Outlet } from 'react-router-dom';
 import avatar from '../../assets/image/avatar-mentor-1.jpg'
 import './Dashboard.css'
 import { itemsMenuHR, itemMenuEmployee } from '../../utils/menuDashboard';
+import { useSelector } from 'react-redux';
 
 
 const Dashboard = () => {
@@ -20,7 +21,9 @@ const Dashboard = () => {
     } = theme.useToken();
     // eslint-disable-next-line no-unused-vars
     const [menu, setMenu] = useState('hr');
+    const userAccount = useSelector((state) => state.account.user);
 
+    console.log(userAccount);
     return (
         <Layout
             className='dashboard'
@@ -70,16 +73,14 @@ const Dashboard = () => {
                                 className="fs-6"
                                 style={{ width: 'fit-content', cursor: 'pointer' }}
                             >
-                                Hồng Minh
+                                {userAccount && userAccount.FullName}
                             </Typography.Title>
                             <DownOutlined className='dropdownIcon'/>
                         </Space>
                     </Popover>
                 </Header>
                 <Content
-                    style={{
-                        margin: '0 16px',
-                    }}
+                    className='main-content'
                 >
                     <Outlet />
                 </Content>
