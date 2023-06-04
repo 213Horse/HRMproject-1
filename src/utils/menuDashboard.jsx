@@ -2,7 +2,6 @@ import {
     BookOutlined,
     CalendarOutlined,
     CarryOutOutlined,
-    DashboardOutlined,
     DollarOutlined,
     FieldTimeOutlined,
     FileDoneOutlined,
@@ -12,7 +11,6 @@ import {
     HighlightOutlined,
     HistoryOutlined,
     IdcardOutlined,
-    NodeExpandOutlined,
     PlusCircleOutlined,
     ScheduleOutlined,
     SwapOutlined,
@@ -21,21 +19,6 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-/**
- *! Menu sidebar with role Accounting
- */
-export const itemsMenuAccounting = [
-    {
-        key: '1',
-        icon: <DashboardOutlined />,
-        label: <Link to="/admin">Dashboard</Link>,
-    },
-    {
-        key: '2',
-        icon: <BookOutlined />,
-        label: <Link to="/admin/payslip">Payslip manager</Link>,
-    },
-];
 
 /**
  *! Menu sidebar with role HR
@@ -49,12 +32,12 @@ export const itemsMenuHR = [
             {
                 key: '1',
                 icon: <BookOutlined />,
-                label: <Link>Xem danh sách nhân viên</Link>,
+                label: <Link to=''>Xem danh sách nhân viên</Link>,
             },
             {
                 key: '2',
                 icon: <BookOutlined />,
-                label: <Link>Thêm nhân viên</Link>,
+                label: <Link to='add-new-employee'>Thêm nhân viên</Link>,
             },
         ],
     },

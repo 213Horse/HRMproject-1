@@ -1,0 +1,18 @@
+.listEmployeeWrapper {
+    margin: 0 24px;
+}
+
+.headerTop {
+    height: 200px;
+}
+
+.listEmployee {
+}
+
+.drawerLabel {
+    color: #1677ff;
+}
+
+.drawerLabel:hover {
+    opacity: 0.9;
+}
