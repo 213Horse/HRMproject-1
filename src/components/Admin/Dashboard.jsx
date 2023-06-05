@@ -5,13 +5,14 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Button, Layout, Menu, Popover, Space, Typography, theme } from 'antd';
 import { useState } from 'react';
-import {  Outlet } from 'react-router-dom';
+import {  Outlet, useNavigate } from 'react-router-dom';
 
 import avatar from '../../assets/image/avatar-mentor-1.jpg'
 import './Dashboard.css'
 import { itemsMenuHR, itemMenuEmployee } from '../../utils/menuDashboard';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../services/apiRequest';
+import { doLogoutAction } from '../../redux/account/accountSlice';
 
 const Dashboard = () => {
     const { Header, Content, Footer, Sider } = Layout;
@@ -22,8 +23,23 @@ const Dashboard = () => {
     // eslint-disable-next-line no-unused-vars
     const [menu, setMenu] = useState('hr');
     const userAccount = useSelector((state) => state.account.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    console.log(userAccount);
+    const handleLogout = async () => {
+        try {
+            const res = await logout();
+            if(res.status === 200) {
+                navigate('/')
+                localStorage.removeItem('user');
+                localStorage.removeItem('access_token');
+                dispatch(doLogoutAction())
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Layout
             className='dashboard'
@@ -60,7 +76,7 @@ const Dashboard = () => {
                             height: 64,
                         }}
                     />
-                    <Popover placement="bottom" content={<a >Logout</a>} trigger="click" style={{ width: '500px' }}>
+                    <Popover placement="bottom" content={<a onClick={() => handleLogout()}>Logout</a>} trigger="click" style={{ width: '500px' }}>
                         <Avatar size={50} src={avatar} style={{ cursor: 'pointer' }} />
                         <Space
                             style={{
