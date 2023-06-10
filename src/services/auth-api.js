@@ -8,9 +8,6 @@ export const loginRequest = (username, password) => {
 }  
 
 export const logout = () => {
-    return axios.get('/api/auth/logout');
+    return axios.get('/api/auth/logout'); 
 }
 
-export const fetchListEmpolyee = () => {
-    return axios.get('/api/Employee');
-}
