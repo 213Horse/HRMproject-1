@@ -1,108 +1,76 @@
 import clsx from 'clsx';
-import styles from './EmployeeList.module.css';
-import { Button, Drawer, Space, Table } from 'antd';
+import { useRef } from 'react';
+import moment from 'moment/moment';
 import { useEffect, useState } from 'react';
-import { fetchListEmpolyee } from '../../../services/apiRequest';
 
-const data = [
-    {
-        key: '1',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-    {
-        key: '2',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-    {
-        key: '3',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-    {
-        key: '4',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-    {
-        key: '5',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-    {
-        key: '6',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-    {
-        key: '7',
-        name: 'anh lam',
-        address: 'London, Park Lane no. 0',
-        birthdate: '19/02/2001',
-        phone: '0929655358',
-        email: 'email',
-        cccd: '123456789123',
-    },
-];
+import { fetchListEmployee } from '../../../services/employee-api';
+import styles from './EmployeeList.module.css';
+import { EmployeeDetail } from './EmployeeDetail';
+import { Table } from 'antd';
+
 export const EmployeeList = () => {
-    const [placement, setPlacement] = useState('right');
     const [open, setOpen] = useState(false);
-    const [employeeList, setEmployeeList] = useState([]);
-
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [selectedUser, setSelectedUser] = useState({});
+    const employeeRef = useRef(null);
     const onClose = () => {
-        setOpen(false);
+        setOpen(false); 
     };
 
     useEffect(() => {
         getAllEmployee();
-    }, []);
-    
+    }, []); 
+
     const getAllEmployee = async () => {
         try {
-            const res = await fetchListEmpolyee();
-            if(res) {
-                console.log(res);
+            const token = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            }
+            setLoading(true);
+            const res = await fetchListEmployee(token)
+            if (res && res.data && res.status === 200) {
+                setLoading(false);
+                employeeRef.current = res.data;
+                const employees = res.data.map((item) => {
+                    return {    
+                        key: item.id,
+                        name: item?.applicationUser?.fullname,
+                        address: item?.address,
+                        birthdate: moment(item?.birthDay).format('DD-MM-YYYY'),
+                        phone: item?.applicationUser?.phoneNumber,
+                        email: item?.applicationUser?.email,
+                        cccd: item?.citizenIdentificationNumber,
+                    };
+                });
+                setData(employees);
             }
         } catch (error) {
             console.log(error);
         }
     };
-    
+
     const columns = [
         {
             title: 'Họ và tên',
             dataIndex: 'name',
             key: 'name',
-            render: (text) => (
-                <a className={clsx(styles.drawerLabel)} onClick={() => setOpen(true)}>
+            render: (text, record) => (
+                <a className={clsx(styles.drawerLabel)} onClick={() => {
+                    setOpen(true)
+                    setSelectedUser(() => {
+                        return employeeRef.current.find((item) => item.id === record.key)
+                    })
+                }}>
                     {text}
                 </a>
             ),
+        },
+        {
+            title: 'email',
+            dataIndex: 'email',
         },
         {
             title: 'Địa chỉ',
@@ -117,10 +85,6 @@ export const EmployeeList = () => {
             dataIndex: 'phone',
         },
         {
-            title: 'email',
-            dataIndex: 'email',
-        },
-        {
             title: 'cccd',
             dataIndex: 'cccd',
         },
@@ -130,12 +94,14 @@ export const EmployeeList = () => {
         console.log('params', pagination, filters, sorter, extra);
     };
 
+    console.log('data', selectedUser);
     return (
         <div className={clsx(styles.listEmployeeWrapper)}>
             <section className={clsx(styles.headerTop)}></section>
             <section className={clsx(styles.listEmployee)}>
                 <Table
                     columns={columns}
+                    loading={loading}
                     dataSource={data}
                     onChange={onChange}
                     pagination={{
@@ -147,25 +113,11 @@ export const EmployeeList = () => {
                         y: 240,
                     }}
                 />
-                <Drawer
-                    title="Drawer with extra actions"
-                    placement={placement}
-                    width={800}
-                    onClose={onClose}
+               <EmployeeDetail 
                     open={open}
-                    extra={
-                        <Space>
-                            <Button onClick={onClose}>Cancel</Button>
-                            <Button type="primary" onClick={onClose}>
-                                OK
-                            </Button>
-                        </Space>
-                    }
-                >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                </Drawer>
+                    onClose={onClose}
+                    selectedUser={selectedUser}
+               />
             </section>
         </div>
     );

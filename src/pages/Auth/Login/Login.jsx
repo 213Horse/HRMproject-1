@@ -4,7 +4,7 @@ import './Login.css';
 import { useState } from 'react';
 import background from '../../../assets/image/MideaGM_animation_v3.gif';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { loginRequest } from '../../../services/apiRequest';
+import { loginRequest } from '../../../services/auth-api';
 import { useDispatch } from 'react-redux';
 import { doLoginAction } from '../../../redux/account/accountSlice';
 import { Button, Form, notification } from 'antd';
@@ -16,7 +16,7 @@ export const Login = () => {
     const [login, setLogin] = useState({
         username: '',
         password: '',
-    }); 
+    });
     const [error, setError] = useState({
         usernameError: '',
         passwordError: '',
@@ -49,12 +49,12 @@ export const Login = () => {
             const res = await loginRequest(login.username, login.password);
             if (res && res.data && res.status === 200) {
                 setIsLoad(false);
-                const {token, ...rest } = res.data;
-                if(res.data?.listRoles?.includes('Manager')){
-                    navigate('/admin')
+                const { token, ...rest } = res.data;
+                if (res.data?.listRoles?.includes('Manager')) {
+                    localStorage.setItem('user', JSON.stringify(rest));
+                    localStorage.setItem('token', token);
                     dispatch(doLoginAction(rest));
-                    localStorage.setItem('access_token', token)
-                    localStorage.setItem('user', JSON.stringify(rest))
+                    navigate('/admin');
                 }
             }
         } catch (error) {

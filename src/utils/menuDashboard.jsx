@@ -13,6 +13,7 @@ import {
     IdcardOutlined,
     PlusCircleOutlined,
     ScheduleOutlined,
+    SolutionOutlined,
     SwapOutlined,
     TeamOutlined,
     UsergroupAddOutlined,
@@ -27,16 +28,16 @@ export const itemsMenuHR = [
     {
         key: 'sub1',
         icon: <TeamOutlined />,
-        label: <Link to="/admin">Quản lý nhân viên</Link>,
+        label: <Link to="/admin" className='text-white'>Quản lý nhân viên</Link>,
         children: [
             {
                 key: '1',
-                icon: <BookOutlined />,
-                label: <Link to=''>Xem danh sách nhân viên</Link>,
+                icon: <SolutionOutlined />,
+                label: <Link to='' className='text-white'>Xem danh sách nhân viên</Link>,
             },
             {
                 key: '2',
-                icon: <BookOutlined />,
+                icon: <UsergroupAddOutlined />,
                 label: <Link to='add-new-employee'>Thêm nhân viên</Link>,
             },
         ],
@@ -44,7 +45,7 @@ export const itemsMenuHR = [
     {
         key: 'shb2',
         icon: <GlobalOutlined />,
-        label: <Link to="/admin/attendance">Quản lý phòng ban</Link>,
+        label: <Link to="/admin/attendance" className='text-white'>Quản lý phòng ban</Link>,
         children: [
             {
                 key: '3',
@@ -56,7 +57,7 @@ export const itemsMenuHR = [
     {
         key: 'sub3',
         icon: <TeamOutlined />,
-        label: <Link to="#">Quản lý phụ cấp</Link>,
+        label: <Link to="#" className='text-white'>Quản lý phụ cấp</Link>,
         children: [
             {
                 key: '4',
@@ -73,7 +74,7 @@ export const itemsMenuHR = [
     {
         key: 'sub4',
         icon: <CalendarOutlined />,
-        label: <Link to="#">Tính lương</Link>,
+        label: <Link to="#" className='text-white'>Tính lương</Link>,
         children: [
             {
                 key: '6',
@@ -95,7 +96,7 @@ export const itemsMenuHR = [
     {
         key: 'sub5',
         icon: <FileDoneOutlined />,
-        label: <Link to="#">Quản lý tăng ca</Link>,
+        label: <Link to="#" className='text-white'>Quản lý tăng ca</Link>,
         children: [
             {
                 key: '9',

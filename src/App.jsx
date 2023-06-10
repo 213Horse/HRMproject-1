@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Dashboard from './components/Admin/Dashboard';
@@ -9,8 +11,6 @@ import { EmployeeList } from './pages/Employees/ListEmployee/EmployeeList';
 import { AddNewEmployee } from './pages/Employees/AddNewEmployee/AddNewEmployee';
 import { Login } from './pages/Auth/Login/Login';
 import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { doLoginAction } from './redux/account/accountSlice';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
@@ -18,7 +18,6 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // const user = Cookies.get('user');
         const user = localStorage.getItem('user');
         if (user) {
             dispatch(doLoginAction(JSON.parse(user)));
@@ -32,7 +31,7 @@ function App() {
                 <ProtectedRoute>
                     <Dashboard />
                 </ProtectedRoute>
-            ),
+            ), 
             errorElement: <NotFoundPage />,
             children: [
                 {

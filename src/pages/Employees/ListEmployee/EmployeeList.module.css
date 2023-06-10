@@ -3,7 +3,7 @@
 }
 
 .headerTop {
-    height: 200px;
+    height: 100px;
 }
 
 .listEmployee {
@@ -11,6 +11,7 @@
 
 .drawerLabel {
     color: #1677ff;
+    font-weight: 500;
 }
 
 .drawerLabel:hover {

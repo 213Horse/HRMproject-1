@@ -3,23 +3,16 @@
 } 
 
 .dashboard__logo {
-    height: 32px;
     margin: 16px;
-    background-color: rgba(255, 255, 255, 0.3);
-    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.3); 
     text-align: center;
-    line-height: 32px;
-    overflow: hidden;
+    overflow: hidden; 
     text-overflow: ellipsis;
     border-radius: 4px;
+    padding: 4px 0;
 }
 
-.main-content {
-    height: calc(100vh - 66px);
-}
-
-
-a {
+.menuSideBar {
     color: #ffff;
 }
 
@@ -38,7 +31,8 @@ a {
     padding: 9px;
 }
 
-.main-content {
+.mainContent {
+    height: calc(100vh - 66px);
     margin-top: 20px;
     height: calc(100% - 64px);
     background-color: rgb(255, 255, 255);

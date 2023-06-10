@@ -4,7 +4,7 @@ const instance = axios.create({
   baseURL: "https://localhost:5001",
 });
 
-instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+// instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('token')}`}
 
 // Add a request interceptor
 instance.interceptors.request.use(

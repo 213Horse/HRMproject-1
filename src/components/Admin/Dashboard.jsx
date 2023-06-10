@@ -6,12 +6,13 @@ import {
 import { Avatar, Button, Layout, Menu, Popover, Space, Typography, theme } from 'antd';
 import { useState } from 'react';
 import {  Outlet, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import clsx from 'clsx';
 
 import avatar from '../../assets/image/avatar-mentor-1.jpg'
-import './Dashboard.css'
+import styles from './Dashboard.module.css'
 import { itemsMenuHR, itemMenuEmployee } from '../../utils/menuDashboard';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../services/apiRequest';
+import { logout } from '../../services/auth-api';
 import { doLogoutAction } from '../../redux/account/accountSlice';
 
 const Dashboard = () => {
@@ -31,8 +32,8 @@ const Dashboard = () => {
             const res = await logout();
             if(res.status === 200) {
                 navigate('/')
-                localStorage.removeItem('user');
-                localStorage.removeItem('access_token');
+                localStorage.removeItem('user'); 
+                localStorage.removeItem('token');
                 dispatch(doLogoutAction())
             }
         } catch (error) {
@@ -42,7 +43,7 @@ const Dashboard = () => {
 
     return (
         <Layout
-            className='dashboard'
+            className={clsx(styles.dashboard)}
         >
             <Sider
                 collapsed={collapsed}
@@ -51,11 +52,11 @@ const Dashboard = () => {
             >
                 <Typography.Title
                     level={5}
-                    className='dashboard__logo text-white'
+                    className={`${clsx(styles.dashboard__logo)} text-white`}
                 >
-                    HR
+                    Manager 
                 </Typography.Title>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={menu === 'hr' ? itemsMenuHR : itemMenuEmployee} />
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" className={clsx(styles.menuSideBar)} items={menu === 'hr' ? itemsMenuHR : itemMenuEmployee} />
             </Sider>
             <Layout>
                 <Header
@@ -91,12 +92,12 @@ const Dashboard = () => {
                             >
                                 {userAccount && userAccount.FullName}
                             </Typography.Title>
-                            <DownOutlined className='dropdownIcon'/>
+                            <DownOutlined className={clsx(styles.dropdownIcon)}/>
                         </Space>
                     </Popover>
                 </Header>
                 <Content
-                    className='main-content'
+                    className={clsx(styles.mainContent)}
                 >
                     <Outlet />
                 </Content>
