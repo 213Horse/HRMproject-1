@@ -1,15 +1,11 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Col, Row, Tabs, Typography, theme } from "antd";
+import { Avatar, Col, Row, Tabs, Typography } from "antd";
 import avatar from '../../assets/image/avatar-mentor-1.jpg'
 import { Individual } from "./Individual/Individual";
 import './profile.css'
 
 const { Text, Title } = Typography;
 export const Profile = () => {
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
-
     const onChange = (key) => {
         console.log(key);
     };
@@ -69,7 +65,6 @@ export const Profile = () => {
 
     return (
         <div
-            style={{ background: colorBgContainer }}
             className="profileWrapper"
         >
             <Row gutter={17}

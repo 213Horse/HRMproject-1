@@ -23,15 +23,15 @@
     width: 200px;
 }
 
-.ant-table-wrapper .ant-table-tbody >tr >td:first-child {
+/* .ant-table-wrapper .ant-table-tbody >tr >td:first-child {
     width: 300px;
     background-color: #ccc;
-}
+} */
 
-.ant-table-wrapper .ant-table-tbody >tr >td:nth-child(2) {
+/* .ant-table-wrapper .ant-table-tbody >tr >td:nth-child(2) {
     width: 100px;
     background-color: #ccc;
-}
+} */
 
 .first-column {
     width: 165px;

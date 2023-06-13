@@ -1,7 +1,8 @@
-import './GlobalStyles.css';
 
-const GlobalResetCss = ({ children }) => {
-    return children;
-};
+import './GlobalStyles.css'
 
-export default GlobalResetCss;
+const GlobalResetCss = ({children}) => {
+  return children
+}
+
+export default GlobalResetCss
