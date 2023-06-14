@@ -13,6 +13,7 @@ import { Login } from './pages/Auth/Login/Login';
 import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
 import { doLoginAction } from './redux/account/accountSlice';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { AllowanceList } from './pages/Allowance/AllowanceList';
 
 function App() {
     const dispatch = useDispatch();
@@ -31,7 +32,7 @@ function App() {
                 <ProtectedRoute>
                     <Dashboard />
                 </ProtectedRoute>
-            ), 
+            ),
             errorElement: <NotFoundPage />,
             children: [
                 {
@@ -49,6 +50,10 @@ function App() {
                 {
                     path: 'attendance',
                     element: <Attendance />,
+                },
+                {
+                    path: 'allowance',
+                    element: <AllowanceList />,
                 },
                 {
                     path: 'payslip',

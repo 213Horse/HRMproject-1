@@ -20,7 +20,6 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-
 /**
  *! Menu sidebar with role HR
  */
@@ -28,24 +27,36 @@ export const itemsMenuHR = [
     {
         key: 'sub1',
         icon: <TeamOutlined />,
-        label: <Link to="/admin" className='text-white'>Quản lý nhân viên</Link>,
+        label: (
+            <Link to="/admin" className="text-white">
+                Quản lý nhân viên
+            </Link>
+        ),
         children: [
             {
                 key: '1',
                 icon: <SolutionOutlined />,
-                label: <Link to='' className='text-white'>Xem danh sách nhân viên</Link>,
+                label: (
+                    <Link to="" className="text-white">
+                        Xem danh sách nhân viên
+                    </Link>
+                ),
             },
             {
                 key: '2',
                 icon: <UsergroupAddOutlined />,
-                label: <Link to='add-new-employee'>Thêm nhân viên</Link>,
+                label: <Link to="add-new-employee">Thêm nhân viên</Link>,
             },
         ],
     },
     {
         key: 'shb2',
         icon: <GlobalOutlined />,
-        label: <Link to="/admin/attendance" className='text-white'>Quản lý phòng ban</Link>,
+        label: (
+            <Link to="/admin/attendance" className="text-white">
+                Quản lý phòng ban
+            </Link>
+        ),
         children: [
             {
                 key: '3',
@@ -57,12 +68,16 @@ export const itemsMenuHR = [
     {
         key: 'sub3',
         icon: <TeamOutlined />,
-        label: <Link to="#" className='text-white'>Quản lý phụ cấp</Link>,
+        label: (
+            <Link to="#" className="text-white">
+                Quản lý phụ cấp
+            </Link>
+        ),
         children: [
             {
                 key: '4',
                 icon: <TeamOutlined />,
-                label: <Link to="#">Danh sách phụ cấp</Link>,
+                label: <Link to="/admin/allowance">Danh sách phụ cấp</Link>,
             },
             {
                 key: '5',
@@ -74,7 +89,11 @@ export const itemsMenuHR = [
     {
         key: 'sub4',
         icon: <CalendarOutlined />,
-        label: <Link to="#" className='text-white'>Tính lương</Link>,
+        label: (
+            <Link to="#" className="text-white">
+                Tính lương
+            </Link>
+        ),
         children: [
             {
                 key: '6',
@@ -96,7 +115,11 @@ export const itemsMenuHR = [
     {
         key: 'sub5',
         icon: <FileDoneOutlined />,
-        label: <Link to="#" className='text-white'>Quản lý tăng ca</Link>,
+        label: (
+            <Link to="#" className="text-white">
+                Quản lý tăng ca
+            </Link>
+        ),
         children: [
             {
                 key: '9',

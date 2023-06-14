@@ -1,0 +1,41 @@
+.dashboard {
+    min-height: 100vh;
+} 
+
+.dashboard__logo {
+    margin: 16px;
+    background-color: rgba(255, 255, 255, 0.3); 
+    text-align: center;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    border-radius: 4px;
+    padding: 4px 0;
+}
+
+.menuSideBar {
+    color: #ffff;
+}
+
+.dropdownIcon {
+    display: block;
+    margin-top: -6px;
+    cursor: pointer;
+}
+
+.ant-popover .ant-popover-content {
+    width: 94px;
+    text-align: center;
+}
+
+.ant-popover .ant-popover-inner {
+    padding: 9px;
+}
+
+.mainContent {
+    height: calc(100vh - 66px);
+    margin-top: 20px;
+    height: calc(100% - 64px);
+    background-color: rgb(255, 255, 255);
+    margin-left: 24px;
+    margin-right: 24px;
+}
