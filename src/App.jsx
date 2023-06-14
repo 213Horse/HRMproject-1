@@ -13,6 +13,11 @@ import { Login } from './pages/Auth/Login/Login';
 import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
 import { doLoginAction } from './redux/account/accountSlice';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import DepartmentList from './pages/Department/DepartmentList/page';
+import DepartmentDetail from './pages/Department/DepartmentDetail/page';
+import DepartmentForm from './pages/Department/DepartmentForm/page';
+
+
 
 function App() {
     const dispatch = useDispatch();
@@ -54,6 +59,23 @@ function App() {
                     path: 'payslip',
                     element: <Payslip />,
                 },
+                {
+                    path: 'apartment',
+                    children: [
+                        {
+                            index: true,
+                            element: <DepartmentList />,
+                        },
+                        {
+                            path: 'detail/:departmentId',
+                            element: <DepartmentDetail />,
+                        },
+                        {
+                            path: 'form',
+                            element: <DepartmentForm />,
+                        },
+                    ]
+                }
             ],
         },
         {

@@ -45,12 +45,12 @@ export const itemsMenuHR = [
     {
         key: 'shb2',
         icon: <GlobalOutlined />,
-        label: <Link to="/admin/attendance" className='text-white'>Quản lý phòng ban</Link>,
+        label: <Link to="/admin/apartment" className='text-white'>Quản lý phòng ban</Link>,
         children: [
             {
                 key: '3',
                 icon: <BookOutlined />,
-                label: <Link to="#">Danh sách phòng ban</Link>,
+                label: <Link to="/admin/apartment">Danh sách phòng ban</Link>,
             },
         ],
     },
