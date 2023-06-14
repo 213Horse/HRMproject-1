@@ -24,7 +24,7 @@ export const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const hanldeOnChange = (e) => {
+    const handleOnChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setLogin({
@@ -38,7 +38,6 @@ export const Login = () => {
             setError({ ...error, usernameError: 'vui lòng điền email hoặc tên đăng nhập' });
             return;
         }
-
         if (!login.password) {
             setError({ ...error, passwordError: 'vui lòng điền mật khẩu' });
             return;
@@ -47,9 +46,9 @@ export const Login = () => {
         try {
             setIsLoad(true);
             const res = await loginRequest(login.username, login.password);
-            if (res && res.data && res.status === 200) {
-                setIsLoad(false);
+            if (res.data) {
                 const { token, ...rest } = res.data;
+
                 if (res.data?.listRoles?.includes('Manager')) {
                     localStorage.setItem('user', JSON.stringify(rest));
                     localStorage.setItem('token', token);
@@ -57,12 +56,19 @@ export const Login = () => {
                     navigate('/admin');
                 }
             }
+            else if (res.response) {
+                notification.error({
+                    message: 'Error',
+                    description: res.response.data,
+                });
+            }
         } catch (error) {
-            setIsLoad(false);
             notification.error({
                 message: 'Error',
                 description: error?.response?.data,
             });
+        } finally {
+            setIsLoad(false);
         }
     };
 
@@ -80,9 +86,9 @@ export const Login = () => {
                             type="text"
                             className={`form-control mt-1 ${error.usernameError ? 'is-invalid' : ''}`}
                             id="FormControlEmail"
-                            placeholder="email hoặc tên đăng nhập"
+                            placeholder="Email hoặc tên đăng nhập"
                             value={login.username}
-                            onChange={hanldeOnChange}
+                            onChange={handleOnChange}
                             name="username"
                         />
                         <div className="invalid-feedback">{error.usernameError}</div>
@@ -95,9 +101,9 @@ export const Login = () => {
                             type={isShowPassword ? 'text' : 'password'}
                             className={`form-control  mt-1 ${error.passwordError ? 'is-invalid' : ''}`}
                             id="FormControlPassword"
-                            placeholder="mật khẩu"
+                            placeholder="Mật khẩu"
                             value={login.password}
-                            onChange={hanldeOnChange}
+                            onChange={handleOnChange}
                             name="password"
                         />
                         <div className="invalid-feedback">{error.passwordError}</div>

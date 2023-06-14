@@ -4,12 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './ForgotPassword.css'
 import { NavLink } from 'react-router-dom';
 import { validateEmail } from '../../../utils/utilities';
+import { resetPasswordRequest } from '../../../services/auth-api';
 
 export const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
+    const [notification, setNotification] = useState('');
 
-    const hanldeOnChange = (e) => {
+    const handleOnChange = (e) => {
         const value = e.target.value;
         setEmail(value)
         if(!value) {
@@ -17,12 +19,33 @@ export const ForgotPassword = () => {
         }
     }
 
-    const handleSendCode = () => {
+    const handleValidateEmail = () => {
         const isValidEmail = validateEmail(email);
         if(!isValidEmail) {
-            setErrorEmail('Email không hợp lệ')
+            setErrorEmail('Email không hợp lệ');
+            return false;
         }else {
-            setErrorEmail('')
+            setErrorEmail('');
+            return true;
+        }
+    }
+
+    const handleSendEmail = async () => {
+        const isValidEmail = handleValidateEmail();
+
+        if (!isValidEmail) return;
+        try {
+            const res = await resetPasswordRequest(email);
+
+            if (res?.data) {
+                console.log("Data: ", res.data);
+                setNotification(res.data);
+            }
+            else if (res?.response) {
+                setErrorEmail(res.response.data);
+            }
+        } catch (error) {
+
         }
     }
 
@@ -39,15 +62,25 @@ export const ForgotPassword = () => {
                         type="email"
                         className={`form-control ${errorEmail ? 'is-invalid' : ''}`}
                         id="FormControlEmail"
-                        placeholder="email của bạn"
+                        placeholder="Email của bạn"
                         value={email}
-                        onChange={hanldeOnChange}
+                        onChange={handleOnChange}
                     />
-                    <div className="invalid-feedback">
-                        {errorEmail}
-                    </div>
+                    {
+                        errorEmail &&
+                        <div className="invalid-feedback">
+                            {errorEmail}
+                        </div>
+                    }
+                    {
+                        notification 
+                        && 
+                        <div className='notification'>
+                            {notification}
+                        </div>
+                    }
                 </div>
-                <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleSendCode}>Gửi mã</button>
+                <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleSendEmail}>Gửi mã</button>
                 <footer className='d-flex'>
                     <NavLink to="/" className='ms-1 text-white'>Đăng nhập</NavLink>
                 </footer>

@@ -11,3 +11,9 @@ export const logout = () => {
     return axios.get('/api/auth/logout'); 
 }
 
+export const resetPasswordRequest = (email) => {
+    const data = new FormData();
+    data.append("email", email);
+
+    return axios.post('/api/auth/reset-password', data);
+}
