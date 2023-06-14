@@ -345,7 +345,7 @@ export const AddNewEmployee = () => {
                     </Form.Item>
 
                     <Title level={3} className="text-center">
-                        PositionId
+                        Vị trí làm việc
                     </Title>
 
                     <Form.Item

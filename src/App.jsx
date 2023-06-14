@@ -7,12 +7,12 @@ import { Profile } from './pages/Profile/Profile';
 import { Attendance } from './pages/Attendance/Attendance';
 import { Payslip } from './pages/Payslip/Payslip';
 import { NotFoundPage } from './components/NotFound/NotFoundPage';
-import { EmployeeList } from './pages/Employees/ListEmployee/EmployeeList';
 import { AddNewEmployee } from './pages/Employees/AddNewEmployee/AddNewEmployee';
 import { Login } from './pages/Auth/Login/Login';
 import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
 import { doLoginAction } from './redux/account/accountSlice';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { EmployeeList } from './pages/Employees/ListEmployee/Employees/EmployeeList';
 
 function App() {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function App() {
                     index: true,
                     element: <EmployeeList />,
                 },
-                {
+                {   
                     path: 'add-new-employee',
                     element: <AddNewEmployee />,
                 },

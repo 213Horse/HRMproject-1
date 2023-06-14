@@ -1,38 +1,41 @@
 import { Button, Drawer, Space, Tabs } from 'antd';
+import { EmployeeSkill } from './EmployeeSkill';
+import { EmployeeExperience } from './EmployeeExperience';
+import { EmployeeDependent } from './EmployeeDependent';
 
 export const EmployeeDetail = (props) => {
     // eslint-disable-next-line react/prop-types
-    const { open, onClose, selectedUser } = props;
+    const { open, onClose, userId, userName } = props;
 
-    const onChange = (key) => {
-        console.log(key);
+    const onChange = () => {
+        // console.log(key);
     };
 
     const items = [
         {
             key: '1',
             label: `Kỹ năng`,
-            children: `Content of Tab Pane 1`,
+            children: <EmployeeSkill userId={userId}/>,
         },
-        {
+        { 
             key: '2',
             label: `Kinh nghiệm`,
-            children: `Content of Tab Pane 2`,
+            children: <EmployeeExperience userId={userId}/>,
         },
-        {
+        { 
             key: '3',
             label: `CV`,
-            children: `Content of Tab Pane 3`,
+            children: `CV`,
         },
         {
             key: '4',
             label: `Người phụ thuộc`,
-            children: `Content of Tab Pane 3`,
+            children: <EmployeeDependent userId={userId}/>,
         },
         {
             key: '5',
             label: `Phụ cấp`,
-            children: `Content of Tab Pane 3`,
+            children: `Phụ cấp`,
         },
     ];
 
@@ -40,7 +43,7 @@ export const EmployeeDetail = (props) => {
         <div>
             <Drawer
                 // eslint-disable-next-line react/prop-types
-                title={`Nhân viên: ${selectedUser?.applicationUser?.fullname}`}
+                title={`Nhân viên: ${userName}`}
                 placement="right"
                 width={900}
                 onClose={onClose}

@@ -3,12 +3,13 @@
 }
 
 .headerTop {
-    height: 100px;
+    height: 100px; 
+    display: flex;
 }
 
 .listEmployee {
 }
-
+ 
 .drawerLabel {
     color: #1677ff;
     font-weight: 500;
@@ -16,4 +17,12 @@
 
 .drawerLabel:hover {
     opacity: 0.9;
+}
+
+.btnAddNew {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 30px;
+    margin-top: 20px;
 }
