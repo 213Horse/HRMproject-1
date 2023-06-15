@@ -1,35 +1,24 @@
-import axios from "axios";
+import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: "https://localhost:5001",
+    baseURL: 'https://localhost:5001',
 });
-
-// instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('token')}`}
-
-// Add a request interceptor
 instance.interceptors.request.use(
-  function (config) { 
-    // Do something before request is sent
-    return config; 
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
+    function (config) {
+        return config;
+    },
+    function (error) {
+        return Promise.reject(error);
+    },
 );
 
-// Add a response interceptor
 instance.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response 
-  },
-  async function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return error
-  }
+    function (response) {
+        return response;
+    },
+    async function (error) {
+        return error;
+    },
 );
 
 export default instance;

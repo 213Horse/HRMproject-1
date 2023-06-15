@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button, Modal, Form, Input, Spin } from 'antd';
+import { Table, Button, Modal, Form, Input, Spin, Popconfirm } from 'antd';
+import { EditFilled, DeleteFilled, PlusCircleFilled } from '@ant-design/icons';
 import {
     fetchAllowances,
     addAllowance,
@@ -48,20 +49,36 @@ export const AllowanceList = () => {
         setIsModalVisible(true);
     };
 
-    const handleDelete = (allowanceId) => {
-        dispatch(deleteAllowance(allowanceId));
+    const handleDelete = (allowanceId, token) => {
+        dispatch(deleteAllowance(allowanceId, token));
     };
 
     const handleOk = () => {
-        form.validateFields().then((values) => {
-            console.log(values);
-            if (allowanceId) {
-                dispatch(updateAllowance(values, token));
-            } else {
-                dispatch(addAllowance(values));
-            }
-            setIsModalVisible(false);
-        });
+        // form.validateFields().then((values) => {
+        //     console.log(values);
+        //     if (allowanceId) {
+        //         dispatch(updateAllowance(values, token));
+        //     } else {
+        //         dispatch(addAllowance(values));
+        //     }
+        //     setIsModalVisible(false);
+        // }).catch((error) => {
+        //     console.error(error);
+        // });
+        form.validateFields()
+            .then((values) => {
+                console.log(values);
+                if (allowanceId) {
+                    dispatch(updateAllowance(values, token));
+                } else {
+                    dispatch(addAllowance(values));
+                }
+                setIsModalVisible(false);
+            })
+            .catch((error) => {
+                console.error(error);
+                console.log(error.errorFields);
+            });
     };
 
     const handleCancel = () => {
@@ -105,8 +122,19 @@ export const AllowanceList = () => {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <Button onClick={() => handleEdit(record)}>Sửa</Button>
-                    <Button onClick={() => handleDelete(record.id)}>Xóa</Button>
+                    <EditFilled onClick={() => handleEdit(record)} />
+                    <Popconfirm
+                        title="Xóa công việc"
+                        onConfirm={() => handleDelete(record.id)}
+                        okText="Có"
+                        cancelText="Không"
+                    >
+                        <Button danger>
+                            {' '}
+                            <DeleteFilled />
+                            Xóa
+                        </Button>
+                    </Popconfirm>
                 </span>
             ),
         },
@@ -121,7 +149,10 @@ export const AllowanceList = () => {
                 style={{ width: 200 }}
             />
             <Button onClick={handleSearch}>Tìm kiếm</Button>
-            <Button onClick={handleAdd}>Thêm phụ cấp</Button>
+            <Button onClick={handleAdd}>
+                {' '}
+                <PlusCircleFilled /> Thêm phụ cấp
+            </Button>
 
             {status === 'loading' ? <Spin /> : <Table dataSource={allowances} columns={columns} rowKey="id" />}
             <Modal title="Phụ Cấp" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
@@ -135,7 +166,6 @@ export const AllowanceList = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        hidden
                         name="employeeContractId"
                         label="EmployeeContractId"
                         rules={[{ required: true, message: 'Vui lòng nhập id nhân viên phụ cấp!' }]}
@@ -165,6 +195,7 @@ export const AllowanceList = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
+                        hidden
                         name="eligibility_Criteria"
                         label="Đủ tiêu chuẩn"
                         rules={[{ required: true, message: 'Vui lòng nhập không để trống!' }]}

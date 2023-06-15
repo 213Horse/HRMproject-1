@@ -17,6 +17,7 @@ import {
     SwapOutlined,
     TeamOutlined,
     UsergroupAddOutlined,
+    SnippetsOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
@@ -147,6 +148,22 @@ export const itemsMenuHR = [
                 key: '12',
                 icon: <TeamOutlined />,
                 label: <Link to="#">Phê duyệt yêu cầu tăng ca</Link>,
+            },
+        ],
+    },
+    {
+        key: 'sub7',
+        icon: <SnippetsOutlined />,
+        label: (
+            <Link to="#" className="text-white">
+                Quản lý chức vụ
+            </Link>
+        ),
+        children: [
+            {
+                key: '13',
+                icon: <TeamOutlined />,
+                label: <Link to="/admin/position">Danh sách chức vụ</Link>,
             },
         ],
     },

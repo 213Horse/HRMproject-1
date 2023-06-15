@@ -14,7 +14,7 @@ import { ForgotPassword } from './pages/Auth/ForgotPassword/ForgotPassword';
 import { doLoginAction } from './redux/account/accountSlice';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { AllowanceList } from './pages/Allowance/AllowanceList';
-
+import { Position } from './pages/Position/position';
 function App() {
     const dispatch = useDispatch();
 
@@ -58,6 +58,10 @@ function App() {
                 {
                     path: 'payslip',
                     element: <Payslip />,
+                },
+                {
+                    path: 'position',
+                    element: <Position />,
                 },
             ],
         },

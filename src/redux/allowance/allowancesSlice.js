@@ -3,7 +3,7 @@ import {
     fetchListAllowance,
     addAllowanceList,
     updateAllowanceList,
-    deleteListAllowance,
+    deleteAnAllowance,
     sreachAllowancesByEmployeeId,
 } from '../../services/allowance-api';
 
@@ -27,9 +27,9 @@ export const updateAllowance = createAsyncThunk('allowances/updateAllowance', as
     return response.data;
 });
 
-export const deleteAllowance = createAsyncThunk('allowances/deleteAllowance', async (token) => {
-    await deleteListAllowance(token);
-    return token;
+export const deleteAllowance = createAsyncThunk('allowances/deleteAllowance', async (id, token) => {
+    const response = await deleteAnAllowance(id, token);
+    return response.data;
 });
 
 export const fetchAllowancesByEmployeeId = createAsyncThunk('allowances/fetchAllowancesByEmployeeId', async (token) => {

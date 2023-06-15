@@ -1,7 +1,7 @@
 import { Button, Col, DatePicker, Form, Input, Row, Select, theme } from 'antd';
 import { Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { getListProsition } from '../../../services/position-api';
+import { fetchPositions } from '../../../services/position-api';
 import { validateAddNewEmployee } from '../../../utils/utilities';
 const { Title } = Typography;
 
@@ -43,7 +43,7 @@ export const AddNewEmployee = () => {
                 },
             };
             try {
-                const res = await getListProsition(token);
+                const res = await fetchPositions(token);
                 if (res && res.data && res.status === 200) {
                     setListPosition(res.data);
                 }

@@ -18,10 +18,10 @@ export const updateAllowanceList = (allowance, token) => {
     return axios.put(`/api/Allowance/Update`, data, token);
 };
 
-export const deleteListAllowance = (token) => {
-    return axios.delete(`/api/Allowance/Delete/`, token);
+export const deleteAnAllowance = (id, token) => {
+    return axios.delete(`/api/Allowance/Delete/${id}`, token);
 };
 
 export const sreachAllowancesByEmployeeId = (employeeId, token) => {
-    return axios.get(`/api/Allowance/GetListByEmployeeId/`, employeeId, token);
+    return axios.get(`/api/Allowance/GetListByEmployeeId`, employeeId, token);
 };
