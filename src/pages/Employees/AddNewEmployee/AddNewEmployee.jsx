@@ -1,39 +1,25 @@
-import { Button, Col, DatePicker, Form, Input, Row, Select, theme } from 'antd';
+/* eslint-disable react/prop-types */
+import { Button, Col, DatePicker, Empty, Form, Input, Row, Select, theme } from 'antd';
 import { Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { getListProsition } from '../../../services/position-api';
 import { validateAddNewEmployee } from '../../../utils/utilities';
+import axios from 'axios';
 const { Title } = Typography;
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
-const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-};
-
-export const AddNewEmployee = () => {
+// eslint-disable-next-line no-unused-vars
+export const AddNewEmployee = (props) => {
+    // const [form] = Form.useForm();
     const { token } = theme.useToken();
     const [listPosition, setListPosition] = useState([]);
-    const [error, setError] = useState({
-        date: '',
+    // const [provincesSelected, setProvincesSelected] = useState([]);
+    const [listPlace, setListPlace] = useState({
+        pro: [],
+        dis: [],
     });
-
-    const formStyle = {
-        maxWidth: 'none',
-        background: token.colorFillAlter,
-        borderRadius: token.borderRadiusLG,
-        margin: 24,
-    };
-
-    const layout = {
-        labelCol: {
-            span: 8,
-        },
-        wrapperCol: {
-            span: 16,
-        },
-    };
+    const [residence, setResidence] = useState({
+        provincesSelector: [],
+    });
 
     useEffect(() => {
         (async function () {
@@ -53,30 +39,100 @@ export const AddNewEmployee = () => {
         })();
     }, []);
 
-    const hanldeOnChangeDate = (date) => {
-        if (date) {
-            const selectedYear = date.format('DD-MM-YYYY').split('-');
-            const currentYear = new Date().getFullYear();
-            if (currentYear - +selectedYear[2] < 18) {
-                setError({ ...error, date: 'error' });
-            } else {
-                setError({ ...error, date: '' });
+    // fetch list province and district
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const provincesRes = await axios.get('https://provinces.open-api.vn/api/p');
+                const districtsRes = await axios.get('https://provinces.open-api.vn/api/d');
+
+                if (
+                    provincesRes.data &&
+                    provincesRes.status === 200 &&
+                    districtsRes.data &&
+                    districtsRes.status === 200
+                ) {
+                    const provinces = provincesRes.data.map((item) => ({
+                        value: item.code,
+                        label: item.name,
+                    }));
+
+                    setResidence({ ...residence, provincesSelector: [...provinces] });
+                    setListPlace({ ...listPlace, pro: [...provincesRes.data], dis: [...districtsRes.data] });
+                }
+            } catch (error) {
+                console.log(error);
             }
+        };
+
+        fetchData();
+    }, []);
+
+    const onFinish = async (values) => {
+        try {
+            // Call a function to validate the form values
+            await validateForm(values);
+
+            // If the validation passes, log the values
+            console.log('Success:', values);
+        } catch (error) {
+            // Handle the validation error
+            console.log('Validation Error:', error);
         }
     };
 
+    const validateForm = async (values) => {
+        const { date, birthdate, password, cccd, bankAccount } = values;
+
+        // Create an array of promises for individual field validations
+        const validationPromises = [
+            validateAddNewEmployee(date, 'date'),
+            validateAddNewEmployee(birthdate, 'birthdate'),
+            validateAddNewEmployee(password, 'password'),
+            validateAddNewEmployee(cccd, 'cccd'),
+            validateAddNewEmployee(bankAccount, 'bankAccount'),
+        ];
+
+        // Wait for all promises to resolve
+        await Promise.all(validationPromises);
+    };
+
+    // const onFill = () => {
+    //     form.setFieldsValue({
+    //         username: 'Hello world!',
+    //         birthdate: 'male',
+    //         phone: '',
+    //         email: '',
+    //         address: '',
+    //         province: '',
+    //         district: '',
+    //         bankname: '',
+    //         accountName: '',
+    //         bankAccount: '',
+    //         account: '',
+    //         password: '',
+    //         cccd: '',
+    //         date: '',
+    //         place: '',
+    //         position: ''
+    //     })
+    // }
+
+    console.log(listPosition);
     return (
         <Form
-            {...layout}
-            name="basic"
-            initialValues={{
-                remember: true,
-            }}
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            // form={onFill}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             autoComplete="off"
             className="mt-4"
-            style={formStyle}
+            style={{
+                maxWidth: 'none',
+                background: token.colorFillAlter,
+                borderRadius: token.borderRadiusLG,
+                margin: 24,
+            }}
         >
             <Row style={{ marginRight: '50px' }}>
                 <Col span={8}>
@@ -101,12 +157,8 @@ export const AddNewEmployee = () => {
                         name="birthdate"
                         rules={[
                             {
-                                required: true,
-                                message: 'Hãy thêm ngày sinh',
-                            },
-                            {
-                                validator: () => {
-                                    return validateAddNewEmployee(error, 'date');
+                                validator: (_, value) => {
+                                    return validateAddNewEmployee(value, 'birthdate');
                                 },
                             },
                         ]}
@@ -120,9 +172,7 @@ export const AddNewEmployee = () => {
                             allowClear
                             placeholder="chọn ngày"
                             style={{ width: '100%' }}
-                            onChange={hanldeOnChangeDate}
                             format="DD-MM-YYYY"
-                            status={error.date}
                         />
                     </Form.Item>
 
@@ -201,19 +251,6 @@ export const AddNewEmployee = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Quận"
-                        name="district"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Hãy thêm địa chỉ',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
                         label="Tỉnh"
                         name="province"
                         rules={[
@@ -223,7 +260,65 @@ export const AddNewEmployee = () => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Select
+                            showSearch
+                            onChange={(value) => {
+                                setResidence(() => {
+                                    const result = listPlace?.dis
+                                        ?.filter((item) => item.province_code === value)
+                                        .map((item) => {
+                                            return {
+                                                value: item.name,
+                                                label: item.name,
+                                            };
+                                        });
+                                    return {
+                                        ...residence,
+                                        districts: result,
+                                    };
+                                });
+                            }}
+                            style={{
+                                width: '100%',
+                            }}
+                            placeholder="Chọn tỉnh/thành phố"
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            filterSort={(optionA, optionB) =>
+                                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                            }
+                            options={residence.provincesSelector}
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Quận"
+                        name="district"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Hãy thêm địa chỉ',
+                            },
+                        ]}
+                    >
+                        <Select
+                            notFoundContent={<Empty description={'hãy chọn tỉnh thành phố trước'} />}
+                            showSearch
+                            style={{
+                                width: '100%',
+                            }}
+                            placeholder="Chọn quận/huyện"
+                            optionFilterProp="children"
+                            filterOption={(input, option) =>
+                                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                            }
+                            filterSort={(optionA, optionB) =>
+                                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                            }
+                            options={residence.provincesSelector.length > 0 && residence.districts}
+                        />
                     </Form.Item>
                 </Col>
                 <Col span={8}>
@@ -262,43 +357,51 @@ export const AddNewEmployee = () => {
                             name="bankAccount"
                             rules={[
                                 {
-                                    required: true,
-                                    message: 'Số tài khoản không được để trống',
+                                    validator: (_, value) => {
+                                        return validateAddNewEmployee(value, 'bankAccount');
+                                    },
                                 },
                             ]}
                         >
                             <Input />
                         </Form.Item>
 
-                        <Title level={3} className="text-center">
-                            Tài khoản hệ thống
-                        </Title>
+                        {!props.isUpdate ? (
+                            <>
+                                <Title level={3} className="text-center">
+                                    Tài khoản hệ thống
+                                </Title>
 
-                        <Form.Item
-                            label="Tài khoản"
-                            name="account"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Hãy thêm tài khoản',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
+                                <Form.Item
+                                    label="Tài khoản"
+                                    name="account"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Tài khoản không được bỏ trống',
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Form.Item>
 
-                        <Form.Item
-                            label="Mật khẩu"
-                            name="password"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Mật khẩu không được để trống',
-                                },
-                            ]}
-                        >
-                            <Input.Password />
-                        </Form.Item>
+                                <Form.Item
+                                    label="Mật khẩu"
+                                    name="password"
+                                    rules={[
+                                        {
+                                            validator: (_, value) => {
+                                                return validateAddNewEmployee(value, 'password');
+                                            },
+                                        },
+                                    ]}
+                                >
+                                    <Input.Password />
+                                </Form.Item>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </div>
                 </Col>
                 <Col span={8}>
@@ -310,8 +413,9 @@ export const AddNewEmployee = () => {
                         name="cccd"
                         rules={[
                             {
-                                required: true,
-                                message: 'Hãy thêm số căn cước công dân',
+                                validator: (_, value) => {
+                                    return validateAddNewEmployee(value, 'cccd');
+                                },
                             },
                         ]}
                     >
@@ -323,12 +427,22 @@ export const AddNewEmployee = () => {
                         name="date"
                         rules={[
                             {
-                                required: true,
-                                message: 'Hãy thêm ngày cấp',
+                                validator: (_, value) => {
+                                    return validateAddNewEmployee(value, 'date');
+                                },
                             },
                         ]}
                     >
-                        <DatePicker format="DD-MM-YYYY" placeholder="chọn ngày" style={{ width: '100%' }} />
+                        <DatePicker
+                            format="DD-MM-YYYY"
+                            placeholder="chọn ngày"
+                            style={{ width: '100%' }}
+                            disabledDate={(current) => {
+                                if (current && current > Date.now()) {
+                                    return true;
+                                }
+                            }}
+                        />
                     </Form.Item>
 
                     <Form.Item
@@ -350,7 +464,7 @@ export const AddNewEmployee = () => {
 
                     <Form.Item
                         label="PositionId"
-                        name="positionId"
+                        name="position"
                         rules={[
                             {
                                 required: true,
@@ -372,20 +486,15 @@ export const AddNewEmployee = () => {
                     </Form.Item>
                 </Col>
             </Row>
-
-            <Row justify="center">
-                <Form.Item
-                    // wrapperCol={{
-                    //     offset: 8,
-                    //     span: 16,
-                    // }}
-                    className="text-center mt-4"
-                >
+            {props.isUpdate ? (
+                <></>
+            ) : (
+                <Row justify="center">
                     <Button type="primary" htmlType="submit" size="large">
                         Thêm nhân viên
                     </Button>
-                </Form.Item>
-            </Row>
+                </Row>
+            )}
         </Form>
     );
 };

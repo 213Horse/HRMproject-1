@@ -14,27 +14,32 @@ export const EmployeeDetail = (props) => {
     const items = [
         {
             key: '1',
+            label: `Thông tin cá nhân`,
+            children: 'đang đợi be',
+        },
+        {
+            key: '2',
             label: `Kỹ năng`,
             children: <EmployeeSkill userId={userId}/>,
         },
         { 
-            key: '2',
+            key: '3',
             label: `Kinh nghiệm`,
             children: <EmployeeExperience userId={userId}/>,
         },
         { 
-            key: '3',
+            key: '4',
             label: `CV`,
             children: `CV`,
         },
         {
-            key: '4',
+            key: '5',
             label: `Người phụ thuộc`,
             children: <EmployeeDependent userId={userId}/>,
         },
         {
-            key: '5',
-            label: `Phụ cấp`,
+            key: '6',
+            label: `Bằng cấp`,
             children: `Phụ cấp`,
         },
     ];

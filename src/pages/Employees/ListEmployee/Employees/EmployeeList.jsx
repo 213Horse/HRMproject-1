@@ -9,24 +9,19 @@ import { DeleteOutlined, EditOutlined, PlusCircleFilled, SearchOutlined } from '
 import Highlighter from 'react-highlight-words';
 import { deleteEmployee, fetchListEmployee } from '../../../../services/employee-api';
 import { EmployeeDetail } from '../EmployeeDetail';
+import { ModalUpdateUser } from './ModalUpdate';
 
 export const EmployeeList = () => {
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState([]);
+    const [dataEmployees, setDataEmployees] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedUser, setSelectedUser] = useState({});
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
+    const [isModalOpenUpload, setIsModalOpen] = useState(false);
     const employeeRef = useRef(null);
     const onClose = () => {
         setOpen(false);
     };
-
-    const token = {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-    };
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -53,10 +48,16 @@ export const EmployeeList = () => {
     };
 
     useEffect(() => {
-        getAllEmployee();
+        const token = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        };
+
+        token && getAllEmployee(token);
     }, []);
 
-    const getAllEmployee = async () => {
+    const getAllEmployee = async (token) => {
         try {
             setLoading(true);
             const res = await fetchListEmployee(token);
@@ -74,8 +75,8 @@ export const EmployeeList = () => {
                         cccd: item?.citizenIdentificationNumber,
                     };
                 });
-                setData(employees);
-            }else {
+                setDataEmployees(employees);
+            } else {
                 console.log(res);
             }
         } catch (error) {
@@ -185,14 +186,14 @@ export const EmployeeList = () => {
                 >
                     {record.name}
                 </a>
-        ),
+            ),
     });
 
     const confirm = async (id) => {
         console.log(id);
         try {
             const res = await deleteEmployee(token, id);
-            if(res && res.data && res.status === 200) {
+            if (res && res.data && res.status === 200) {
                 message.success(res.data);
                 getAllEmployee();
             }
@@ -201,7 +202,7 @@ export const EmployeeList = () => {
         }
     };
 
-    console.log(data);
+    // console.log(employeeRef.current);
     const columns = [
         {
             title: 'Họ và tên',
@@ -235,13 +236,28 @@ export const EmployeeList = () => {
             // eslint-disable-next-line no-unused-vars
             render: (_, record) => (
                 <>
-                    <Popconfirm title="Xóa nhân viên này ?" onConfirm={() => confirm(record.key)} okText="Có" cancelText="Không">
+                    <Popconfirm
+                        title="Xóa nhân viên này ?"
+                        onConfirm={() => confirm(record.key)}
+                        okText="Có"
+                        cancelText="Không"
+                    >
                         <a className={clsx(styles.drawerLabel)}>
-                            <DeleteOutlined style={{fontSize: '18px', color: 'red'}}/>
+                            <DeleteOutlined style={{ fontSize: '18px', color: 'red' }} />
                         </a>
                     </Popconfirm>
-                    <a className={clsx(styles.drawerLabel)} style={{marginLeft: '10px'}}>
-                        <EditOutlined  style={{fontSize: '18px'}}/>
+                    <a
+                        className={clsx(styles.drawerLabel)}
+                        style={{ marginLeft: '10px' }}
+                        onClick={() => {
+                            setOpenModalUpdate(true);
+                            setSelectedUser(() => {
+                                return employeeRef.current.find((item) => item.id === record.key);
+                            });
+                            // console.log(record);
+                        }}
+                    >
+                        <EditOutlined style={{ fontSize: '18px' }} />
                     </a>
                 </>
             ),
@@ -252,6 +268,7 @@ export const EmployeeList = () => {
         console.log('params', pagination, filters, sorter, extra);
     };
 
+    // console.log(selectedUser);   
     return (
         <div className={clsx(styles.listEmployeeWrapper)}>
             <section className={clsx(styles.headerTop)}>
@@ -268,7 +285,7 @@ export const EmployeeList = () => {
                 <Table
                     columns={columns}
                     loading={loading}
-                    dataSource={data}
+                    dataSource={dataEmployees}
                     onChange={onChange}
                     pagination={{
                         current: 1,
@@ -286,11 +303,12 @@ export const EmployeeList = () => {
                     userName={selectedUser?.applicationUser?.fullname}
                 />
             </section>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Basic Modal" open={isModalOpenUpload} onOk={handleOk} onCancel={handleCancel}>
                 <p>Some contents...</p>
                 <p>Some contents...</p>
                 <p>Some contents...</p>
             </Modal>
+            <ModalUpdateUser selectedUser={selectedUser} isOpen={openModalUpdate} setOpen={setOpenModalUpdate} />
         </div>
     );
 };
